@@ -34,16 +34,16 @@ router.post('/register', async (req, res) => {
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!email || !password) {
+    if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
     try {
         const [rows] = await db.query(
-            'SELECT * FROM users WHERE email = ?',
-            [email]
+            'SELECT * FROM users WHERE username = ?',
+            [username]
         );
 
         if (rows.length === 0) {

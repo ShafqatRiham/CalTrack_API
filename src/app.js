@@ -12,6 +12,9 @@ app.use(express.json());
 const authRouter = require('./routes/auth');
 console.log('4. auth router loaded');
 
+const foodsRouter = require('./routes/foods');
+app.use('/api/foods', foodsRouter);
+
 app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
@@ -21,7 +24,7 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 console.log('5. PORT is:', PORT);
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
 
