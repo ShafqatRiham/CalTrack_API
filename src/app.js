@@ -21,6 +21,12 @@ app.use('/api/meals', mealsRouter);
 const activityRouter = require('./routes/activity');
 app.use('/api/activity', activityRouter);
 
+const leaderboardRouter = require('./routes/leaderboard');
+app.use('/api/leaderboard', leaderboardRouter);
+
+const goalsRouter = require('./routes/goals');
+app.use('/api/goals', goalsRouter);
+
 app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {

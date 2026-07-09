@@ -19,7 +19,7 @@ router.post('/log', async (req, res) => {
 
         const log_id = logResult.insertId;
 
-        // Insert each food item linked to that log
+        // Insert each food item
         for (const item of items) {
             await db.query(
                 `INSERT INTO meal_log_items 
@@ -36,6 +36,46 @@ router.post('/log', async (req, res) => {
                     item.fat || 0
                 ]
             );
+        }
+
+        // Update streak logic
+        const [users] = await db.query(
+            'SELECT streak, last_log_date FROM users WHERE user_id = ?',
+            [user_id]
+        );
+
+        if (users.length > 0) {
+            const user = users[0];
+            const today = new Date(log_date);
+            const lastLog = user.last_log_date ? new Date(user.last_log_date) : null;
+
+            let newStreak = 1;
+
+            if (lastLog) {
+                // Calculate difference in days
+                const diffTime = today.getTime() - lastLog.getTime();
+                const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays === 0) {
+                    // Already logged today — keep current streak
+                    newStreak = user.streak;
+                } else if (diffDays === 1) {
+                    // Logged yesterday — increment streak
+                    newStreak = user.streak + 1;
+                } else {
+                    // Missed a day — reset streak
+                    newStreak = 1;
+                }
+            }
+
+            // Only update if this is a new day's log
+            const lastLogStr = lastLog ? lastLog.toISOString().split('T')[0] : null;
+            if (lastLogStr !== log_date) {
+                await db.query(
+                    'UPDATE users SET streak = ?, last_log_date = ? WHERE user_id = ?',
+                    [newStreak, log_date, user_id]
+                );
+            }
         }
 
         res.status(201).json({

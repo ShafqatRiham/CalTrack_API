@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
-    const { username, email, password, weight, height, weight_unit, height_unit } = req.body;
+    const { username, email, password, weight, height, weight_unit, height_unit, gender } = req.body;
 
     if (!username || !email || !password) {
         return res.status(400).json({ message: 'All fields are required' });
@@ -17,8 +17,8 @@ router.post('/register', async (req, res) => {
 
         await db.query(
             `INSERT INTO users 
-            (username, email, password_hash, weight, height, weight_unit, height_unit) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            (username, email, password_hash, weight, height, weight_unit, height_unit, gender) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 username,
                 email,
@@ -26,7 +26,8 @@ router.post('/register', async (req, res) => {
                 weight || null,
                 height || null,
                 weight_unit || 'kg',
-                height_unit || 'cm'
+                height_unit || 'cm',
+                gender || null
             ]
         );
 
@@ -39,7 +40,6 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
