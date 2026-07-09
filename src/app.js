@@ -15,6 +15,12 @@ console.log('4. auth router loaded');
 const foodsRouter = require('./routes/foods');
 app.use('/api/foods', foodsRouter);
 
+const mealsRouter = require('./routes/meals');
+app.use('/api/meals', mealsRouter);
+
+const activityRouter = require('./routes/activity');
+app.use('/api/activity', activityRouter);
+
 app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
