@@ -32,7 +32,7 @@ CREATE TABLE `activity_logs` (
   PRIMARY KEY (`activity_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `activity_logs` (
 
 LOCK TABLES `activity_logs` WRITE;
 /*!40000 ALTER TABLE `activity_logs` DISABLE KEYS */;
-INSERT INTO `activity_logs` VALUES (1,1,'2026-07-08',2000,80.00,'2026-07-07 18:44:27'),(2,2,'2026-07-09',1000,40.00,'2026-07-09 10:29:49'),(3,1,'2026-07-09',2000,80.00,'2026-07-09 17:30:34'),(4,1,'2026-07-10',1000,40.00,'2026-07-09 18:08:39'),(5,1,'2026-07-05',500,20.00,'2026-07-09 18:11:05');
+INSERT INTO `activity_logs` VALUES (1,1,'2026-07-08',2000,80.00,'2026-07-07 18:44:27'),(2,2,'2026-07-09',1000,40.00,'2026-07-09 10:29:49'),(3,1,'2026-07-09',2000,80.00,'2026-07-09 17:30:34'),(4,1,'2026-07-10',1000,40.00,'2026-07-09 18:08:39'),(5,1,'2026-07-05',500,20.00,'2026-07-09 18:11:05'),(6,5,'2026-07-10',1000,35.50,'2026-07-10 04:57:07'),(7,6,'2026-07-10',1000,30.10,'2026-07-10 04:58:19'),(8,4,'2026-07-10',1000,38.20,'2026-07-10 05:06:40'),(9,7,'2026-07-10',1000,44.30,'2026-07-10 05:07:31'),(10,8,'2026-07-10',1000,24.70,'2026-07-10 05:07:57');
 /*!40000 ALTER TABLE `activity_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'testuser','test@email.com','$2b$10$2FKnyu9wspwJ/kC0V5lzM.1HQwrnJC6iAj6iULsJiAWsWRTrAqiFK','2026-06-28 16:47:41',NULL,NULL,'kg','cm',NULL,1,'2026-07-05'),(2,'test','test@gmail.com','$2b$10$40dnc.DMSheraoyHcWEbzOcGGTopa9aOuNs6ugdb.ibPlXEnCizWK','2026-07-06 05:36:18',NULL,NULL,'kg','cm',NULL,1,'2026-07-09'),(4,'test1','test1@gmail.com','$2b$10$V8Ik.T4AiQft0I1UaOKQsuYlwVEcDjK3Rq8qY4qOad9Y/R2FEISki','2026-07-09 17:22:05',NULL,156.00,'kg','cm','male',1,'2026-07-10'),(5,'test2','test2@gmail.com','$2b$10$nMvy9.FnGvpzPf9Ep8qXduEBK4aaxpcLcJ1MA4AZIFIWMVBIUvRXa','2026-07-09 17:22:42',NULL,NULL,'kg','cm','female',1,'2026-07-10'),(6,'test3','teset3@gmail.com','$2b$10$LPjdSD8LGz/Q1U1Nkg9LS.l3WqRY53bPkt6T68QeAPxQMPjc0lKrS','2026-07-09 17:23:18',NULL,NULL,'kg','cm','other',0,NULL),(7,'test4','test4@gmail.com','$2b$10$7n/MQTu3jgRfJmFzfOm34emTBwRriXNoKgwIFwUcuG6/9KNiXIDLq','2026-07-09 17:23:47',NULL,NULL,'kg','cm','prefer_not_to_say',0,NULL),(8,'test5','test5@gmail.com','$2b$10$RjECZk263qfNvIMC84kike8S0Ka7gdHZvOQQIrVj5cTwVa3dcqAze','2026-07-09 17:24:12',NULL,NULL,'kg','cm','prefer_not_to_say',0,NULL),(9,'test6','test6@gmail.com','$2b$10$ZWi1tTyuwLmn3a42y1hj..HTs.CUWj2UY2wscSdCl5yLuFOuRxGTK','2026-07-09 17:24:48',NULL,NULL,'kg','cm','prefer_not_to_say',0,NULL),(10,'test7','test7@gmail.com','$2b$10$p.d06Dx673ygi2YfMrHyDOBJVINs//12SzoELkY0H2B7y61vDNqgq','2026-07-09 17:25:18',NULL,NULL,'kg','cm','prefer_not_to_say',0,NULL),(11,'test8','test8@gmail.com','$2b$10$sFMwJw23jh/SHTEECGGcDe68vyQ7LYqDImYRk.JAHkqjE9KVHpNne','2026-07-09 17:25:43',NULL,NULL,'kg','cm','prefer_not_to_say',0,NULL);
+INSERT INTO `users` VALUES (1,'testuser','test@email.com','$2b$10$2FKnyu9wspwJ/kC0V5lzM.1HQwrnJC6iAj6iULsJiAWsWRTrAqiFK','2026-06-28 16:47:41',NULL,NULL,'kg','cm',NULL,1,'2026-07-05'),(2,'test','test@gmail.com','$2b$10$40dnc.DMSheraoyHcWEbzOcGGTopa9aOuNs6ugdb.ibPlXEnCizWK','2026-07-06 05:36:18',NULL,NULL,'kg','cm',NULL,1,'2026-07-09'),(4,'test1','test1@gmail.com','$2b$10$V8Ik.T4AiQft0I1UaOKQsuYlwVEcDjK3Rq8qY4qOad9Y/R2FEISki','2026-07-09 17:22:05',85.00,155.00,'kg','cm','male',1,'2026-07-10'),(5,'test2','test2@gmail.com','$2b$10$nMvy9.FnGvpzPf9Ep8qXduEBK4aaxpcLcJ1MA4AZIFIWMVBIUvRXa','2026-07-09 17:22:42',95.00,170.00,'kg','cm','female',1,'2026-07-10'),(6,'test3','teset3@gmail.com','$2b$10$LPjdSD8LGz/Q1U1Nkg9LS.l3WqRY53bPkt6T68QeAPxQMPjc0lKrS','2026-07-09 17:23:18',65.00,160.00,'kg','cm','other',0,NULL),(7,'test4','test4@gmail.com','$2b$10$7n/MQTu3jgRfJmFzfOm34emTBwRriXNoKgwIFwUcuG6/9KNiXIDLq','2026-07-09 17:23:47',85.00,180.00,'kg','cm','prefer_not_to_say',0,NULL),(8,'test5','test5@gmail.com','$2b$10$RjECZk263qfNvIMC84kike8S0Ka7gdHZvOQQIrVj5cTwVa3dcqAze','2026-07-09 17:24:12',55.00,155.00,'kg','cm','prefer_not_to_say',0,NULL),(9,'test6','test6@gmail.com','$2b$10$ZWi1tTyuwLmn3a42y1hj..HTs.CUWj2UY2wscSdCl5yLuFOuRxGTK','2026-07-09 17:24:48',90.00,185.00,'kg','cm','prefer_not_to_say',0,NULL),(10,'test7','test7@gmail.com','$2b$10$p.d06Dx673ygi2YfMrHyDOBJVINs//12SzoELkY0H2B7y61vDNqgq','2026-07-09 17:25:18',62.00,168.00,'kg','cm','prefer_not_to_say',0,NULL),(11,'test8','test8@gmail.com','$2b$10$sFMwJw23jh/SHTEECGGcDe68vyQ7LYqDImYRk.JAHkqjE9KVHpNne','2026-07-09 17:25:43',NULL,NULL,'kg','cm','prefer_not_to_say',0,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -222,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-07-10  5:04:18
+-- Dump completed on 2026-07-10 14:17:16
