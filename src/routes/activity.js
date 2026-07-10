@@ -2,18 +2,25 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// Simple calorie estimation from steps
-// I'm not certain of the exact source of this formula — it's a widely cited
-// approximation but accuracy varies per person based on weight, height, and pace
-function estimateCalories(steps, weight_kg) {
-    if (weight_kg) {
-        // Slightly more accurate estimate using weight
-        // Formula: steps × 0.0005 × weight_kg (approximate MET-based calculation)
-        // Verify this against a reliable health/fitness source before presenting as accurate
+// Calorie estimation using steps, weight and height
+// Note: this is an approximation — accuracy varies per individual
+// Verify against a reliable health/fitness source before presenting as medically accurate
+function estimateCalories(steps, weight_kg, height_cm) {
+    if (weight_kg && height_cm) {
+        // Estimate stride length from height
+        // Approximate: stride length ≈ height × 0.414
+        const stride_length_m = (height_cm * 0.414) / 100;
+        const distance_km = (steps * stride_length_m) / 1000;
+        // MET-based approximation for walking at average pace (5km/h)
+        // calories ≈ MET × weight_kg × duration_hours
+        const duration_hours = distance_km / 5;
+        const calories = 3.5 * weight_kg * duration_hours;
+        return Math.round(calories * 10) / 10;
+    } else if (weight_kg) {
+        // Weight only fallback
         return Math.round(steps * 0.0005 * weight_kg * 10) / 10;
     }
-    // Fallback if no weight available
-    // Rough approximation: steps × 0.04
+    // No body data fallback
     return Math.round(steps * 0.04 * 10) / 10;
 }
 
@@ -26,20 +33,32 @@ router.post('/log', async (req, res) => {
     }
 
     try {
-        // Get user's weight for more accurate calorie calculation
+        // Get user's weight and height for more accurate calorie calculation
         const [users] = await db.query(
-            'SELECT weight, weight_unit FROM users WHERE user_id = ?',
+            'SELECT weight, weight_unit, height, height_unit FROM users WHERE user_id = ?',
             [user_id]
         );
 
         let weight_kg = null;
-        if (users.length > 0 && users[0].weight) {
-            weight_kg = users[0].weight_unit === 'lbs'
-                ? users[0].weight * 0.453592  // convert lbs to kg
-                : users[0].weight;
+        let height_cm = null;
+
+        if (users.length > 0) {
+            const user = users[0];
+
+            if (user.weight) {
+                weight_kg = user.weight_unit === 'lbs'
+                    ? user.weight * 0.453592
+                    : user.weight;
+            }
+
+            if (user.height) {
+                height_cm = user.height_unit === 'ft'
+                    ? user.height * 30.48
+                    : user.height;
+            }
         }
 
-        const calories_burned = estimateCalories(steps, weight_kg);
+        const calories_burned = estimateCalories(steps, weight_kg, height_cm);
 
         // Check if an entry already exists for this user and date
         const [existing] = await db.query(
