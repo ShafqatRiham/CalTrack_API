@@ -91,4 +91,39 @@ router.post('/save', async (req, res) => {
     }
 });
 
+// POST /api/foods/custom - save a custom food created by the user
+router.post('/custom', async (req, res) => {
+    const { user_id, name, calories, protein, carbs, fat, fiber, sodium } = req.body;
+
+    if (!name || calories === undefined) {
+        return res.status(400).json({ message: 'Name and calories are required' });
+    }
+
+    try {
+        const [result] = await db.query(
+            `INSERT INTO foods 
+            (user_id, name, calories, protein, carbs, fat, fiber, sodium, serving_size, source) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, '100g', 'custom')`,
+            [
+                user_id || null,
+                name,
+                calories,
+                protein || 0,
+                carbs || 0,
+                fat || 0,
+                fiber || 0,
+                sodium || 0
+            ]
+        );
+
+        res.status(201).json({
+            food_id: result.insertId,
+            message: 'Custom food saved successfully'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error while saving custom food' });
+    }
+});
+
 module.exports = router;
